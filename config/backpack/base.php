@@ -12,29 +12,28 @@ return [
     */
 
     // Project name. Shown in the breadcrumbs and a few other places.
-    'project_name' => 'Backpack Demo',
+    'project_name' => 'Chomp',
 
     // Menu logos
-    'logo_lg'   => '<b>Back</b>pack',
-    'logo_mini' => '<b>B</b>p',
+    'logo_lg'   => '<b>C</b>homp',
+    'logo_mini' => '<b>C</b>p',
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'Cristian Tabacitu',
+    'developer_name' => 'Kevin Cunningham',
 
     // Developer website. Link in footer.
-    'developer_link' => 'http://tabacitu.ro',
+    'developer_link' => 'https://www.kevincunningham.co.uk',
 
     // Show powered by Laravel Backpack in the footer?
-    'show_powered_by' => true,
+    'show_powered_by' => false,
 
     // The AdminLTE skin. Affects menu color and primary/secondary colors used throughout the application.
-    'skin' => 'skin-purple',
+    'skin' => 'skin-blue-light',
     // Options: skin-black, skin-blue, skin-purple, skin-red, skin-yellow, skin-green, skin-blue-light, skin-black-light, skin-purple-light, skin-green-light, skin-red-light, skin-yellow-light
 
-    // Date & Datetime Format Syntax: https://github.com/jenssegers/date#usage
-    // (same as Carbon)
-    'default_date_format'     => 'Do MMMM YYYY',
-    'default_datetime_format' => 'Do MMMM YYYY, HH:mm',
+    // Date & Datetime Format Syntax: https://carbon.nesbot.com/docs/#api-localization
+    'default_date_format'     => 'dddd Do MMM',
+    'default_datetime_format' => 'D MMM YYYY, HH:mm',
 
     // Content of the HTML meta robots tag to prevent indexing and link following
     'meta_robots_content' => 'noindex, nofollow',
@@ -95,6 +94,7 @@ return [
     'middleware_class' => [
         App\Http\Middleware\CheckIfAdmin::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // \Backpack\Base\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
     ],
 
     // Alias for that middleware
@@ -135,4 +135,19 @@ return [
     // You can rename this disk here. Default: root
     'root_disk_name' => 'root',
 
+    /*
+    |--------------------------------------------------------------------------
+    | License Code
+    |--------------------------------------------------------------------------
+    |
+    | If you, your employer or your client make money by using Backpack, you need
+    | to purchase a license. A license code will be provided after purchase,
+    | which you can put here or in your ENV file in staging & production.
+    |
+    | More info and payment form on:
+    | https://www.backpackforlaravel.com
+    |
+    */
+
+    'license_code' => env('BACKPACK_LICENSE', false),
 ];
