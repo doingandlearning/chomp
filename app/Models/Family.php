@@ -20,7 +20,7 @@ class Family extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['contact_name', 'contact_number', 'consent', 'picture_authority', 'postcode'];
+    protected $fillable = ['contact_number', 'consent', 'picture_authority', 'postcode'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -36,6 +36,10 @@ class Family extends Model
     */
     function children() {
         return $this->hasMany(Child::class);
+    }
+
+    function adults() {
+      return $this->hasMany(Adult::class);
     }
 
     function sessions() {
@@ -69,12 +73,20 @@ class Family extends Model
         return $children;
     }
 
+    function primary_adult() {
+      return $this->adults()->where('primary', '=', '1')->first();
+    }
+
+    function additional_adults() {
+      return $this->adults()->where('primary', '=', '0')->get();
+    }
+
     function attending_session($id) {
         return $this->sessions()->findOrFail($id)->pivot->attended;
     }
 
     function update_attendance($id) {
-        if ($this->attending_session($id)) {
+          if ($this->attending_session($id)) {
             $this->sessions()->updateExistingPivot(Session::find($id), ['attended' => false]);
             return;
         }

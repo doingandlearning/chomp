@@ -15,5 +15,5 @@ mix.js("resources/js/app.js", "public/js")
       require("tailwindcss"),
     ])
     .browserSync({
-      proxy: 'demo.test'
+      proxy: 'chomp.test'
     });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Family;
 use App\Models\Child;
+use App\Models\Adult;
 use Validator;
 
 class SignupController extends Controller
@@ -54,18 +55,28 @@ class SignupController extends Controller
     $request->validate($rules);
 
     $family = Family::create([
-      'contact_name' => request('contact_name'),
       'postcode' => request('postcode'),
       'contact_number' => request('contact_number'),
       'gdpr' => request('consent'),
       'picture_authority' => $request->has('picture_authority') ? (bool)request('picture_authority') : false,
     ]);
 
-    if (isset($request['adult'])) {
-      foreach($request['adult'] as $key=>$adult) {
-        $family->additional_adults = $family->additional_adults . $adult['name'] . "**";
-        $family->save();
-      }
+    $primary = Adult::create([
+      'name' => $request['contact_name'],
+      'primary' => '1',
+    ]);
+
+    $primary->family()->associate($family);
+    $primary->save();
+
+    foreach($request['adult'] as $key=>$adult) {
+      $adult = Adult::create([
+        'name' => $adult['name'],
+        'primary' => '0',
+      ]);
+
+      $adult->family()->associate($family);
+      $adult->save();
     }
 
     foreach ($request['child'] as $child) {

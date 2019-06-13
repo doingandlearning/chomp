@@ -22,12 +22,14 @@ class RegisterController extends Controller
                 'contact_number' => $family->contact_number,
                 'children' => $family->children_with_ages_array(),
                 'attending' => $family->attending_session($id),
+                'primary_adult' => $family->primary_adult(),
+                'additional' => $family->additional_adults(),
                 ];
         };
         $venue = $session->venue->first();
         $date = $session->date;
-        $id = $session->id;
-        return view('register', compact('id','date','venue', 'families'));
+        $leader = $session->leader()->first();
+        return view('register', compact('id','date','venue', 'families', 'leader'));
     }
 
     function register(Request $request)

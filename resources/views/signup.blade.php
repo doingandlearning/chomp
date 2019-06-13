@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Chomp Sign-up</title>
-	<link rel="stylesheet" href="{{asset('css/app.css')}}">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
+@extends('layout.layout', ['title' => 'Signup for Chomp'])
+
+@section('content')
 <form class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/signup" method="POST">
 	<h1 class="text-center text-3xl py-3">Sign up</h1>
 	@csrf
@@ -137,5 +130,4 @@
 
 </script>
 
-</body>
-</html>
+@endsection

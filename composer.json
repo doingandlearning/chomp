@@ -19,7 +19,8 @@
         "barryvdh/laravel-elfinder": "^0.4.2",
         "spatie/laravel-backup": "^6.1",
         "backpack/backupmanager": "1.4.*",
-        "laravel/telescope": "^2.0"
+        "laravel/telescope": "^2.0",
+        "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

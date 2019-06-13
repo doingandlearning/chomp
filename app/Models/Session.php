@@ -32,7 +32,7 @@ class Session extends Model
 
     function open() {
       $open = $this->season()->first()->open;
-      return $open === 1 ? 'Open' : 'Closed';
+      return $open === "1" ? 'Open' : 'Closed';
     }
 
     /*
@@ -54,6 +54,14 @@ class Session extends Model
 
     function families() {
       return $this->belongsToMany(Family::class, 'familysession')->withPivot('attended');
+    }
+
+    function adults() {
+      return $this->belongsToMany(Adult::class, 'adultsession')->withPivot('attended');
+    }
+
+    function children() {
+      return $this->belongsToMany(Child::class, 'childsession')->withPivot('attended');
     }
 
     /*

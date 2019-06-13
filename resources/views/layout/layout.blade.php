@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chomp Sign-up</title>
+    <title>{{$title}}</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>

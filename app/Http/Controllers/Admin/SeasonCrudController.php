@@ -33,7 +33,14 @@ class SeasonCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        $this->crud->addColumns(['name', 'open']);
+        $this->crud->addColumns(['name']);
+
+        $this->crud->addColumn([
+          'name' => 'open',
+          'label' => 'Open',
+          'type' => 'boolean',
+          'options' => [0 => '❌', 1 => '✓']
+        ]);
 
         $this->crud->addField([
             'name'  => 'name',

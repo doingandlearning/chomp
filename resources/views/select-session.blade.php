@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Chomp Sign-up</title>
-  <link rel="stylesheet" href="{{asset('css/app.css')}}">
-</head>
-<body>
+@extends('layout.layout', ['title' => 'Select Sessions'])
+
+@section('content')
 <div class="w-full sm:w-2/3  mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-6w-full sm:w-2/3  mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-6">
   <div class="md:flex justify-center mx-auto pb-6">
     <div class="mr-12 p-4 bg-aqua-lightest shadow-md rounded">
-    <p>{{ $family->contact_name }} ({{ $family->contact_number }})</p>
+    <p>{{ $adult }} ({{ $family->contact_number }})</p>
     <p>Kids:
     @foreach($children as $child)
       @if($loop->last)
@@ -67,5 +63,4 @@
     @endforelse
   </div>
 </div>
-</body>
-</html>
+  @endsection

@@ -14,7 +14,6 @@ class CreateFamiliesTable extends Migration
     {
         Schema::create('families', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('contact_name');
             $table->string('contact_number');
             $table->boolean('consent')->nullable();
             $table->boolean('picture_authority')->nullable();
