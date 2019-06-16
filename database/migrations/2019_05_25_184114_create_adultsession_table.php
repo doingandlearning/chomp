@@ -14,11 +14,11 @@ class CreateAdultsessionTable extends Migration
     public function up()
     {
         Schema::create('adultsession', function (Blueprint $table) {
-          $table->primary(['adult_id', 'session_id']);
-          $table->integer('adult_id')->index();
-          $table->integer('session_id')->index();
-          $table->boolean('attended')->default(False);
-          $table->timestamps();
+            $table->primary(['adult_id', 'session_id']);
+            $table->integer('adult_id')->index();
+            $table->integer('session_id')->index();
+            $table->boolean('attended')->default(False);
+            $table->timestamps();
         });
     }
 

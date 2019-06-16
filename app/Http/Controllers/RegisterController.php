@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Session;
-use App\Models\Family;
+use App\Models\Adult;
+use App\Models\Child;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Log;
 
@@ -16,14 +17,19 @@ class RegisterController extends Controller
 
         $families = [];
         foreach ($session->families()->get() as $family) {
+            $primary = $family->primary_adult();
             $families[] = [
                 'id' => $family->id,
                 'contact_name' => $family->contact_name,
                 'contact_number' => $family->contact_number,
-                'children' => $family->children_with_ages_array(),
+                'children' => $family->children_array_with_attendance($id),
                 'attending' => $family->attending_session($id),
-                'primary_adult' => $family->primary_adult(),
                 'additional' => $family->additional_adults(),
+                'primary_adult' => [
+                  'id' => $primary->id,
+                  'name' => $primary->name,
+                  'attending' => $primary->attending_session($id)
+               ],
                 ];
         };
         $venue = $session->venue->first();
@@ -34,9 +40,17 @@ class RegisterController extends Controller
 
     function register(Request $request)
     {
-        Family::find($request['family'])
-            ->update_attendance($request['session']);
-        return Response::json(['Success' => 'Success']);
+      if($request['adult'] === 'true') {
+        Adult::findOrFail($request['person_id'])
+          ->toggle_attendance($request['session_id']);
+        return Response::json(['Success' => 'Success - Adult registered']);
+      }
+      if($request['child'] === 'true') {
+        Child::findOrFail($request['person_id'])
+          ->toggle_attendance($request['session_id']);
+        return Response::json(['Success' => 'Success - Child registered']);
+      }
+      return Response::json(['Failure' => 'Neither child nor adult']);
     }
 
 }

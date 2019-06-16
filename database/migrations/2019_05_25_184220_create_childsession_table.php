@@ -14,10 +14,10 @@ class CreateChildsessionTable extends Migration
     public function up()
     {
         Schema::create('childsession', function (Blueprint $table) {
-          $table->primary(['child_id', 'session_id']);
-          $table->integer('child_id')->index();
-          $table->integer('session_id')->index();
-          $table->boolean('attended')->default(False);
+            $table->primary(['child_id', 'session_id']);
+            $table->integer('child_id')->index();
+            $table->integer('session_id')->index();
+            $table->boolean('attended')->default(False);
             $table->timestamps();
         });
     }

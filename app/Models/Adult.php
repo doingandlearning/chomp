@@ -7,58 +7,68 @@ use Backpack\CRUD\CrudTrait;
 
 class Adult extends Model
 {
-  use CrudTrait;
+    use CrudTrait;
 
-  /*
-  |--------------------------------------------------------------------------
-  | GLOBAL VARIABLES
-  |--------------------------------------------------------------------------
-  */
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
 
-  protected $table = 'adults';
-  // protected $primaryKey = 'id';
-  // public $timestamps = false;
-  // protected $guarded = ['id'];
-  protected $fillable = ['name', 'primary', 'family_id'];
-  // protected $hidden = [];
-  // protected $dates = [];
+    protected $table = 'adults';
+    // protected $primaryKey = 'id';
+    // public $timestamps = false;
+    // protected $guarded = ['id'];
+    protected $fillable = ['name', 'primary', 'family_id'];
+    // protected $hidden = [];
+    // protected $dates = [];
 
-  /*
-  |--------------------------------------------------------------------------
-  | FUNCTIONS
-  |--------------------------------------------------------------------------
-  */
-  function toggle_attendance($id) {
-    if ($this->attending_session($id)) {
-      $this->sessions()->updateExistingPivot(Session::find($id), ['attended' => false]);
-      return;
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+    function toggle_attendance($id) {
+        if ($this->attending_session($id)) {
+            $this->sessions()->detach(Session::find($id));
+            return;
+        }
+        $this->sessions()->attach(Session::find($id), ['attended' => true]);
     }
-    $this->sessions()->updateExistingPivot(Session::find($id), ['attended' => true]);
-    return;
-  }
-  /*
-  |--------------------------------------------------------------------------
-  | RELATIONS
-  |--------------------------------------------------------------------------
-  */
-  public function family() {
-    return $this->belongsTo('App\Models\Family');
-  }
-  /*
-  |--------------------------------------------------------------------------
-  | SCOPES
-  |--------------------------------------------------------------------------
-  */
 
-  /*
-  |--------------------------------------------------------------------------
-  | ACCESORS
-  |--------------------------------------------------------------------------
-  */
+    function attending_session($id) {
+        if ($this->sessions()->where('id', $id)->exists()) {
+            return $this->sessions()->findOrFail($id)->pivot->attended === "1" ? true : false;
+        }
+        return false;
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+    public function family() {
+        return $this->belongsTo('App\Models\Family');
+    }
 
-  /*
-  |--------------------------------------------------------------------------
-  | MUTATORS
-  |--------------------------------------------------------------------------
-  */
+    function sessions() {
+        return $this->belongsToMany(Session::class, 'adultsession')->withPivot('attended');
+    }
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESORS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
 }
