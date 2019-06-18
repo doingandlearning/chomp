@@ -14,6 +14,10 @@ class RegisterController extends Controller
     function index($id)
     {
         $session = Session::findOrFail($id);
+        $session['number_of_adults'] = $session->number_of_adults();
+        $session['number_of_children'] = $session->number_of_children();
+        $session['number_of_adults_attending'] = $session->number_of_adults_attending();
+        $session['number_of_children_attending'] = $session->number_of_children_attending();
 
         $families = [];
         foreach ($session->families()->get() as $family) {
@@ -24,7 +28,7 @@ class RegisterController extends Controller
                 'contact_number' => $family->contact_number,
                 'children' => $family->children_array_with_attendance($id),
                 'attending' => $family->attending_session($id),
-                'additional' => $family->additional_adults(),
+                'additional' => $family->additional_adults_array($id),
                 'primary_adult' => [
                   'id' => $primary->id,
                   'name' => $primary->name,
@@ -32,10 +36,11 @@ class RegisterController extends Controller
                ],
                 ];
         };
+
         $venue = $session->venue->first();
         $date = $session->date;
         $leader = $session->leader()->first();
-        return view('register', compact('id','date','venue', 'families', 'leader'));
+        return view('register', compact('id','date','venue', 'families', 'leader', 'session'));
     }
 
     function register(Request $request)

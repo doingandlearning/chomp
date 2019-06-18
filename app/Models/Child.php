@@ -50,7 +50,7 @@ class Child extends Model
 
     function attending_session($id) {
         if ($this->sessions()->where('id', $id)->exists()) {
-            return $this->sessions()->findOrFail($id)->pivot->attended === "1" ? true : false;
+            return $this->sessions()->findOrFail($id)->pivot->attended === 1 ? true : false;
         }
         return false;
     }

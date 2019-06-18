@@ -41,6 +41,14 @@ class Family extends Model
         return $string;
     }
 
+    function number_of_children() {
+        return $this->children()->count();
+    }
+
+    function number_of_adults() {
+        return $this->adults()->count();
+    }
+
     function children_with_ages_array() {
         $children_db = $this->children()->get();
 
@@ -77,6 +85,38 @@ class Family extends Model
 
     function additional_adults() {
         return $this->adults()->where('primary', '=', '0')->get();
+    }
+
+    function additional_adults_array($id) {
+        $additional_adults = [];
+        foreach ($this->additional_adults() as $adult) {
+            $additional_adults[] = [
+                $adult->id,
+                $adult->name,
+                $adult->attending_session($id)
+            ];
+        }
+        return empty($additional_adults) ? null : $additional_adults;
+    }
+
+    function number_of_adults_attending($id) {
+        $result = 0;
+        foreach ($this->adults()->get() as $adult) {
+            if ($adult->attending_session($id)) {
+                ++$result;
+            }
+        }
+        return $result;
+    }
+
+    function number_of_children_attending($id) {
+        $result = 0;
+        foreach ($this->children()->get() as $child) {
+            if ($child->attending_session($id)) {
+                ++$result;
+            }
+        }
+        return $result;
     }
 
     function attending_session($id) {

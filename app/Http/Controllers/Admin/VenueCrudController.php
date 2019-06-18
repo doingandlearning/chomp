@@ -33,27 +33,27 @@ class VenueCrudController extends CrudController
     |--------------------------------------------------------------------------
     */
 
-    $this->crud->setColumns(['name', 'address', 'capacity']);
+      $this->crud->addColumn([
+          'name' => 'risk_assessment',
+          'label' => 'Risk Assessment',
+          'type' => 'labelled_link',
+          'text' => 'View Assessment',
+      ]);
+      $this->crud->setColumns(['name', 'address', 'capacity']);
 
-     $this->crud->addColumn([
+      $this->crud->addColumn([
        'name' => 'contact_name',
        'label' => 'Contact Name'
      ]);
 
-     $this->crud->addColumn([
+      $this->crud->addColumn([
        'name' => 'contact_number',
        'label' => 'Contact Number'
      ]);
 
-     $this->crud->addColumn([
-       'name' => 'risk_assessment',
-       'label' => 'Risk Assessment',
-       'type' => 'labelled_link',
-       'text' => 'View Assessment',
-     ]);
 
 
-    $this->crud->addField([
+      $this->crud->addField([
       'name' => 'name',
       'label' => "Venue name"
     ]);
