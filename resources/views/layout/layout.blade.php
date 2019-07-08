@@ -12,7 +12,7 @@
     </div>
 
 </main><!-- /.container -->
-
+@include('layout.partials.footer-scripts')
 <script src="{{asset('js/app.js')}}" ></script>
 </body>
 </html>

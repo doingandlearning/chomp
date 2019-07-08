@@ -77,56 +77,6 @@
 
 <script type="text/javascript">
 
-	$(document).ready(function(){
-		var postURL = "<?php echo url('addmore'); ?>";
-		var i=1;
-		var j=1;
-
-		function childHTML(i) {
-			return '<div id="divchild' + i +'"class="bg-grey-lighter shadow-md rounded px-8 pt-6 pb-8 mb-4">\n' +
-					'          <div class="mb-4">\n' +
-					'          <label class="text-gray-700" for="child[' + i + '][name]">Child name</label>\n' +
-					'      <input class="form-input mt-1 block w-full" type="text" value="" class="form-control" id="child[' + i + '][name]" name="child[' + i + '][name]">\n' +
-					'          </div>\n' +
-					'          <div class="mb-4">\n' +
-					'          <label class="text-gray-700" for="child[' + i + '][birthyear]">Year of birth</label>\n' +
-					'      <input class="form-input mt-1 block w-full" type="text" value="" class="form-control" id="child[' + i + '][birthyear]" name="child[' + i + '][birthyear]">\n' +
-					'          </div>\n' +
-					'          <div class="mb-4">\n' +
-					'          <label class="text-gray-700" for="child[' + i + '][special_requirements]">Additional Information (food, health, anything you think is important)</label>\n' +
-					'      <textarea class="form-textarea mt-1 block w-full" rows="3" value="" class="form-control" id="child[' + i + '][special_requirements]" name="child[' + i + '][special_requirements]"></textarea>' +
-					'          </div>\n' +
-					'  <button type="button" class="text-red-400 btn_remove" id="child'+ i + '">Remove Child</button>' +
-					'          </div>';
-		}
-
-		function adultHTML (j) {
-			return '<div id="divadult' + j +'" class="bg-grey-lighter shadow-md rounded px-8 pt-6 pb-8 mb-4">\n' +
-					'          <div class="mb-4">\n' +
-					'          <label class="text-gray-700" for="adult[' + j + '][name]">Adult name</label>\n' +
-					'      <input class="form-input mt-1 block w-full" type="text" value="" class="form-control" id="adult[' + j + '][name]" name="adult[' + j + '][name]">\n' +
-					'          </div>\n' +
-					'  <button type="button" class="text-red-400 btn_remove" id="adult'+ j + '">Remove Adult</button>' +
-					'          </div>';
-		}
-
-		$('#addchild').click(function(){
-			$('#children').append(childHTML(i));
-			i++;
-		});
-
-		$('#addadult').click(function(){
-			$('#extraadult').append(adultHTML(j));
-			j++;
-		});
-
-		$(document).on('click', '.btn_remove', function(){
-			var button_id = $(this).attr("id");
-			$('#div'+button_id+'').remove();
-		});
-
-
-	});
 
 </script>
 

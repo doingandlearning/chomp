@@ -103,6 +103,7 @@ class SessionCrudController extends CrudController
         // add asterisk for fields that are required in SessionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->addButtonFromModelFunction('line', 'open_google', 'openGoogle', 'beginning');
     }
 
     public function store(StoreRequest $request)

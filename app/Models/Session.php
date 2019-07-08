@@ -32,7 +32,7 @@ class Session extends Model
 
     function open() {
       $open = $this->season()->first()->open;
-      return $open === "1" ? 'Open' : 'Closed';
+      return $open === 1 ? 'Open' : 'Closed';
     }
 
     function number_of_adults() {
@@ -65,6 +65,11 @@ class Session extends Model
             $result += $family->number_of_children_attending($this->id);
         }
         return $result;
+    }
+
+    public function openText($crud = false)
+    {
+        return '<a class="btn btn-xs btn-default" href="http://google.com?q='.urlencode($this->text).'" data-toggle="tooltip" title="Just a demo custom button."><i class="fa fa-phone"></i> Text</a>';
     }
 
     /*

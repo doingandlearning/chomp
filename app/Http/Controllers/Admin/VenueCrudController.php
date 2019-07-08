@@ -27,19 +27,19 @@ class VenueCrudController extends CrudController
     $this->crud->setRoute(config('backpack.base.route_prefix') . '/venue');
     $this->crud->setEntityNameStrings('venue', 'venues');
 
-    /*
-    |--------------------------------------------------------------------------
-    | CrudPanel Configuration
-    |--------------------------------------------------------------------------
-    */
+      /*
+      |--------------------------------------------------------------------------
+      | CrudPanel Configuration
+      |--------------------------------------------------------------------------
+      */
 
+      $this->crud->setColumns(['name', 'address', 'capacity']);
       $this->crud->addColumn([
           'name' => 'risk_assessment',
           'label' => 'Risk Assessment',
           'type' => 'labelled_link',
           'text' => 'View Assessment',
       ]);
-      $this->crud->setColumns(['name', 'address', 'capacity']);
 
       $this->crud->addColumn([
        'name' => 'contact_name',

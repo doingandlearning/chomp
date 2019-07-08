@@ -17,6 +17,7 @@ class SelectSessionController extends Controller
       $family = Family::findOrFail($family_id);
       $children = $family->children;
       $adult = $family->adults()->where('primary', '=', '1')->pluck('name')[0];
+      $additional_adults = $family->adults()->where('primary', '=', '0')->pluck('name');
 
       $sessions = DB::table('sessions')
           ->join('venues', 'sessions.venue_id', '=', 'venues.id')
@@ -26,7 +27,7 @@ class SelectSessionController extends Controller
           ->get()
           ->groupBy('name');
 
-      return view('select-session', compact('family', 'sessions', 'children', 'adult'));
+      return view('select-session', compact('family', 'sessions', 'children', 'adult', 'additional_adults'));
     }
 
     public function store(Request $request) {

@@ -20,7 +20,8 @@
         "spatie/laravel-backup": "^6.1",
         "backpack/backupmanager": "1.4.*",
         "laravel/telescope": "^2.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "twilio/sdk": "^5.34"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
