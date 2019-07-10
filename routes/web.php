@@ -23,3 +23,5 @@ Route::get('family/{id}', 'SelectSessionController@update');
 
 Route::get('register/{id}', 'RegisterController@index');
 Route::post('register', 'RegisterController@register');
+
+//Route::get('message/{number}/{message}', 'SmsController@sendSms');
