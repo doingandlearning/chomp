@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 use App\Models\Family;
+use Carbon\Carbon;
 
 class Session extends Model
 {
@@ -23,12 +24,18 @@ class Session extends Model
     protected $fillable = ['date', 'session_id', 'leader_id', 'venue_id'];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $casts = [
+        'date' => 'dateTime',
+    ];
 
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function setDateAttribute($value) {
+        $this->attributes['date'] = Carbon::parse($value);
+    }
 
     function open() {
       $open = $this->season()->first()->open;

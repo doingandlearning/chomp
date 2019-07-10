@@ -5,13 +5,15 @@
     <div>
       <h2 class="text-2xl">Venue Details</h2>
       <p>{{ $venue->name }}</p>
+      <p>{{ $venue->contact_name }}</p>
+      <p>{{ $venue->contact_number }}</p>
       @if(! $venue->risk_assessment == null)
       <p class="pt-4"><a class="text-green-800" href="{{ url($venue->risk_assessment) }}" download>Risk Assessment</a></p>
         @endif
     </div>
     <div>
       <h2 class="text-2xl">Session Details</h2>
-      <p>{{ date('l d F', strtotime($date))}}</p>
+      <p>{{ date('l d F @ H:i A', strtotime($date))}}</p>
       @if (! $leader == null)
       <p class="font-weight-bold pt-4">Leader: {{ $leader['contact_name'] }}</p>
       <p>({{ $leader['contact_number'] }})</p>

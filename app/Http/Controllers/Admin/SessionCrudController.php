@@ -44,7 +44,7 @@ class SessionCrudController extends CrudController
             'name' => 'date',
             'label' => 'Date',
             'type' => 'date_link',
-            'format' => 'dddd Do MMMM',
+            'format' => 'dddd Do MMMM @ HH:mm A',
             'href' => 'register'
         ]);
 
@@ -67,6 +67,19 @@ class SessionCrudController extends CrudController
         ]);
 
 
+        $this->crud->addField([   // DateTime
+            'name' => 'date',
+            'label' => 'Date',
+            'type' => 'datetime_picker',
+            // optional:
+            'datetime_picker_options' => [
+                'format' => 'DD/MM/YYYY HH:mm',
+                'language' => 'en'
+            ],
+            'allows_null' => false,
+             'default' => '2019-05-12 10:00:00',
+        ]);
+
         $this->crud->addField([
             'label' => 'Season',
             'type' => 'select',
@@ -75,12 +88,6 @@ class SessionCrudController extends CrudController
             'attribute' => 'name',
             'model' => 'App\Models\Season',
         ]);
-
-        $this->crud->addField([
-            'name' => 'date',
-            'label' => 'Date',
-            'type' => 'datetime',
-            ]);
 
         $this->crud->addField([
             'label' => 'Venue',
@@ -103,7 +110,6 @@ class SessionCrudController extends CrudController
         // add asterisk for fields that are required in SessionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
-        $this->crud->addButtonFromModelFunction('line', 'open_google', 'openGoogle', 'beginning');
     }
 
     public function store(StoreRequest $request)
