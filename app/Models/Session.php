@@ -120,6 +120,18 @@ class Session extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getTotalAttendingAttribute() {
+        return $this->number_of_adults_attending() + $this->number_of_children_attending();
+    }
+
+    public function getTotalAttendedAttribute() {
+        return true;
+    }
+
+    public function getOpenAttribute() {
+        return $this->open();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

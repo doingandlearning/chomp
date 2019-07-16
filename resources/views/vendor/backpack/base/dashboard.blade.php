@@ -19,8 +19,24 @@
     <div class="col-md-12">
       <div class="box">
         <div class="box-body">{{ trans('backpack::base.logged_in') }}</div>
+        <main>
+          <h2>Here are the upcoming sessions:</h2>
+          <table>
+            <tr>
+              <th>Venue</th>
+              <th>Date</th>
+              <th>Number signed up</th>
+            </tr>
+            @foreach ($sessions as $session)
+              <tr>
+                <td>{{$session['venue']['name']}}</td>
+                <td><a href="/register/{{$session->id}}">{{date('l jS F', strtotime($session->date))}}</a></td>
+                <td>{{$session['TotalAttending']}}</td>
+              </tr>
+              @endforeach
+          </table>
+        </main>
       </div>
-
     </div>
   </div>
 @endsection

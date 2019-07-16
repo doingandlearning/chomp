@@ -11,13 +11,9 @@ class SessionController extends Controller
     public function save(Request $request)
     {
         $request->only('notes', 'id');
-
         $session = Session::find($request['id']);
-
         $session->notes = $request['notes'];
-
         $session->save();
-
         return back();
     }
 }
