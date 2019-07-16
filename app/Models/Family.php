@@ -80,11 +80,11 @@ class Family extends Model
     }
 
     function primary_adult() {
-        return $this->adults()->where('primary', '=', '1')->first();
+        return $this->adults()->where('primary', '=', 1)->first();
     }
 
     function additional_adults() {
-        return $this->adults()->where('primary', '=', '0')->get();
+        return $this->adults()->where('primary', '=', 0)->get();
     }
 
     function additional_adults_array($id) {
@@ -160,6 +160,10 @@ class Family extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+
+    public function getContactNameAttribute() {
+        return $this->primary_adult()->name;
+    }
 
     /*
     |--------------------------------------------------------------------------

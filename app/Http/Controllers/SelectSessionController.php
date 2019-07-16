@@ -16,9 +16,8 @@ class SelectSessionController extends Controller
       $family_id = $request->session()->get('family_id');
       $family = Family::findOrFail($family_id);
       $children = $family->children;
-      $adult = $family->adults()->where('primary', '=', '1')->pluck('name')[0];
+      $adult = $family->primary_adult()->name;
       $additional_adults = $family->adults()->where('primary', '=', '0')->pluck('name');
-
       $sessions = DB::table('sessions')
           ->join('venues', 'sessions.venue_id', '=', 'venues.id')
           ->join('seasons', 'seasons.id', '=', 'sessions.season_id')
@@ -64,7 +63,7 @@ class SelectSessionController extends Controller
         // Getting family details to check and confirm
         $family = Family::findOrFail($id);
         $children = $family->children;
-
+        $adult = $family->primary_adult()->name;
         $sessions = DB::table('sessions')
             ->join('venues', 'sessions.venue_id', '=', 'venues.id')
             ->join('seasons', 'seasons.id', '=', 'sessions.season_id')
@@ -81,7 +80,7 @@ class SelectSessionController extends Controller
 
         $sessions = $sessions->groupBy('name');
 
-        return view('select-session', compact('family', 'sessions', 'children', 'attendance'));
+        return view('select-session', compact('family', 'sessions', 'children', 'attendance', 'adult'));
     }
 
 }

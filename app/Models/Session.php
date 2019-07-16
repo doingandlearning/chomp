@@ -121,7 +121,7 @@ class Session extends Model
     */
 
     public function getTotalAttendingAttribute() {
-        return $this->number_of_adults_attending() + $this->number_of_children_attending();
+        return $this->number_of_adults() + $this->number_of_children();
     }
 
     public function getTotalAttendedAttribute() {

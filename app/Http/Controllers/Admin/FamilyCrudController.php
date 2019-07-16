@@ -35,7 +35,7 @@ class FamilyCrudController extends CrudController
         */
 
         $this->crud->addColumn([
-          'name' => 'contact_name',
+          'name' => 'ContactName',
           'label' => 'Contact Name',
           'type' => 'text_link',
           'href' => 'family',
