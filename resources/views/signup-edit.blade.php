@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-<form class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/signup" method="POST">
+<form class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{action('SignupController@update', $family->id)}}" method="POST">
 	<h1 class="text-center py-3">Sign up</h1>
 	@csrf
 	@if ($errors->any())

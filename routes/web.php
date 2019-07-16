@@ -15,7 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::Resource('/signup', 'SignupController');
+Route::post('sessionnotes', 'SessionController@save');
+Route::Resource('signup', 'SignupController');
 
 Route::get('/select-session', 'SelectSessionController@index');
 Route::post('/select-session', 'SelectSessionController@store');
@@ -23,3 +24,5 @@ Route::get('family/{id}', 'SelectSessionController@update');
 
 Route::get('register/{id}', 'RegisterController@index');
 Route::post('register', 'RegisterController@register');
+
+
