@@ -20,7 +20,7 @@
         @endif
     </div>
   </div>
-  <div class="mt-8 flex justify-between ">
+  <div class="mt-8 flex  justify-between ">
   <table class="table w-full">
     <tr class="table-row">
       <th class="table-cell border border-2 bg-gray-200">Who?</th>
@@ -44,6 +44,13 @@
     </tr>
   </table>
   </div>
+  <form class="flex flex-col my-8" action="/sessionnotes" method="post">
+    @csrf
+    <textarea name="notes" value="" id="" rows="10" class="border border-black-400 mb-3">{{$session['notes']}}</textarea>
+    <input type="hidden" name="id" value="{{$id}}">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">Update notes</button>
+  </form>
+
   <div class="mt-8">
     <fieldset>
     @foreach ($families as $family)
