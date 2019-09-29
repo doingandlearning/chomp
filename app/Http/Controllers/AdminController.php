@@ -27,7 +27,7 @@ class AdminController extends Controller
     public function dashboard()
     {
         $this->data['title'] = trans('backpack::base.dashboard'); // set the page title
-        $this->data['sessions'] = Session::where('date', '<', Carbon::now()->addMonths(3))->get();
+        $this->data['sessions'] = Session::where('date', '<', Carbon::now()->addMonths(3))->orderBy('date', 'asc')->get();
         return view('backpack::dashboard', $this->data);
     }
 
