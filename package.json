@@ -11,12 +11,11 @@
   },
   "devDependencies": {
     "acorn": "6.0.0",
-    "webpack": "^4.0.0",
     "axios": "^0.18",
     "bootstrap": "^4.0.0",
     "bootstrap-sass": "^3.0.0",
     "browser-sync": "^2.26.3",
-    "cross-env": "^5.1",
+    "cross-env": "^5.2.1",
     "gulp": "^3.9.1",
     "jquery": "^3.2",
     "laravel-elixir": "^5.0.0",
@@ -28,7 +27,8 @@
     "sass-loader": "^7.1.0",
     "tailwindcss": "^1.0.1",
     "vue": "^2.5.17",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.41.0"
   },
   "dependencies": {
     "@tailwindcss/custom-forms": "^0.1.4",
