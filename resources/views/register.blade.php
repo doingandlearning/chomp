@@ -45,9 +45,9 @@
   </table>
   </div>
   <form class="flex flex-col my-8" action="/sessionnotes" method="post">
-    @csrf
     <textarea name="notes" value="" id="" rows="10" class="border border-black-400 mb-3">{{$session['notes']}}</textarea>
     <input type="hidden" name="id" value="{{$id}}">
+    <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
     <button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">Update notes</button>
   </form>
 
@@ -63,6 +63,17 @@
             {{ $family['primary_adult']['attending']  ?  "checked='checked'" : "" }}
             ><label><span class="pb-4 font-weight-bolder text-lg underline">{{ $family['primary_adult']['name'] }} ({{$family['contact_number']}})</span></label>
           </div>
+          @if (!empty($family['additional']))
+            @foreach ($family['additional'] as $additional)
+            <div class="flex md:pr-8">
+              <input type="checkbox" class="adult_click align-self"
+                     session_id="{{ $id }}"
+                 person_id="{{ $additional[0] }}"
+                  {{ $additional[2]  ?  "checked='checked'" : "" }}
+              ><label>{{ $additional[1] }}</label>
+            </div>
+            @endforeach
+          @endif
           <p>
             @foreach ($family['children'] as $child)
             <div class="flex md:pr-8">

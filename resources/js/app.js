@@ -26,11 +26,7 @@ function trigger_attendance_update(element) {
       person_id: person_id,
       child: child,
       adult: adult,
-      _token: "{{ csrf_token() }}",
-      test: "test"
-    },
-    headers: {
-      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      _token: $("#token").val()
     },
     success: function(data, status, xhr) {
       // success callback function

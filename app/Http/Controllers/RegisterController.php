@@ -45,7 +45,6 @@ class RegisterController extends Controller
 
     function register(Request $request)
     {
-      return Response::json(['Success' => 'Success - Adult registered']);
       if($request['adult'] === 'true') {
        Adult::findOrFail($request['person_id'])
           ->toggle_attendance($request['session_id']);
