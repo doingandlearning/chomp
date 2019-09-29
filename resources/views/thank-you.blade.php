@@ -5,11 +5,15 @@
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
-<div class="w-full sm:w-2/3  mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-6">
-<h2 class="pb-3">That's great!</h2>
-  <p class="pb-2">We're looking forward to seeing you, {{ $family->contact_name }}.</p>
 
-  <p class="pb-2">The sessions you have signed up for are:</p>
+<div class="flex my-10">
+    <div class="bg-white w-1/2 m-auto border-1  border-dashed border-gray-100 shadow-md rounded-lg overflow-hidden">
+      
+      <div class="p-4">
+        <p class="mb-1 text-gray-900 font-semibold">That's great!</p>
+
+        <span class="text-gray-700">We're looking forward to seeing you, {{ $family->contact_name }}.</span>
+        <p class="pb-2">The sessions you have signed up for are:</p>
   <ul>
     @foreach ($sessions as $venue => $dates)
       @foreach ($dates as $date)
@@ -17,8 +21,11 @@
         @endforeach
     @endforeach
   </ul>
+  <p>If you have any questions, feel free to get in touch at <a href="mailto:chomp@onechurchbrighton.org">chomp@onechurchbrighton.org</a></p>
 
-  <p>If you have any questions, feel free to get in touch at chomp@onechurchbrighton.org</p>
-</div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

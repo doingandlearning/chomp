@@ -1,36 +1,42 @@
   @extends('layout.layout', ['title' => 'Select Sessions'])
 
   @section('content')
-    <div class="p-4 mb- text-lg">
-    <heading>
+  <div class="max-w-sm w-full lg:max-w-full lg:flex">
+  <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('/img/card-left.jpg')" title="Woman holding a mug">
+  </div>
+  <div class="border border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+    <div class="mb-8">
+      <p class="text-sm text-gray-600 flex items-center">
       Great! Here are the details, click the button if you need to change them.
-    </heading>
-    </div>
-    <div class="md:flex justify-center mx-auto pb-6">
-      <div class="mr-12 flex flex-row flex-wrap p-4 bg-blue-200 shadow-md rounded">
-        <p>Main contact: {{ $adult }} ({{ $family->contact_number }})</p>
-        @if (!empty($additional_adults))
-         <p>Additional adults:
+      </p>
+      <div class="text-gray-900 font-bold text-xl mb-2">Main contact: {{ $adult }} ({{ $family->contact_number }})</div>
+      @if (!empty($additional_adults))
+          <div>
+         <p class="text-gray-700 text-base">Additional adults:
             @foreach ($additional_adults as $adult)
               @if($loop->last)
-                {{ $adult }}
+              {{ $adult }}  
               @else
-                {{ $adult }},
+              {{ $adult }},
               @endif
             @endforeach
           </p>
-
-        @endif
-
-        <p>Kids:
+          
+          <p class="text-gray-800 text-base border-t border-gray-500">Kids:
           @foreach($children as $child)
             @if($loop->last)
-              {{ $child->name }} ({{$child->age()}})
+              <div class="text-gray-700 text-base">
+              {{ $child->name }} ({{$child->age()}}) {{ $child->special_requirements }}
+              </div>
             @else
-              {{ $child->name }} ({{ $child->age() }}),
+              <div class="text-gray-700 text-base">
+              {{ $child->name }} ({{ $child->age() }}) {{ $child->special_requirements }},
+              </div>
             @endif
           @endforeach
         </p>
+          </div>
+        @endif
         <a href="{{ route('signup.edit',$family->id)}}">
         <button
             class="mt-8 bg-orange-400 hover:bg-orange-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-decoration-none"
@@ -38,10 +44,17 @@
           Update details
         </button>
         </a>
+    </div>
+    <div class="flex items-center">
+      <div class="text-sm">
+
       </div>
     </div>
+  </div>
+</div>
+    
     <div>
-      <h2 class="text-2xl">Which sessions would you like to attend?</h2>
+      <h2 class="text-2xl my-4">Which sessions would you like to attend?</h2>
 
       @forelse ($sessions as $venue=>$sessions)
         @if($loop->first)
@@ -49,12 +62,12 @@
             <input type="hidden" name="family" value="{{$family->id}}">
             @endif
             @csrf
-            <div class="pt-5 bg-blue-200 my-4">
-              <h3 class="px-4 text-lg">Venue name: {{ $venue }}</h3>
+            <div class="p-8 bg-blue-200 my-4">
+              <h3 class="px-4 pb-4 text-lg">Venue name: {{ $venue }}</h3>
               <div class="flex-wrap sm:flex">
                 @foreach ($sessions as $session)
 
-                  <div class="py-2 flex w-1/3">
+                  <div class="py-2 flex w-1/3 px-5">
 
                     <input type="checkbox"
                            class="px-2"

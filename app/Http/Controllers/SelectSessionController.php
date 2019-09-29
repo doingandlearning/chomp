@@ -26,7 +26,7 @@ class SelectSessionController extends Controller
           ->get()
           ->groupBy('name');
 
-      return view('select-session', compact('family', 'sessions', 'children', 'adult', 'additional_adults'));
+      return view('session-select.index', compact('family', 'sessions', 'children', 'adult', 'additional_adults'));
     }
 
     public function store(Request $request) {
@@ -80,7 +80,7 @@ class SelectSessionController extends Controller
 
         $sessions = $sessions->groupBy('name');
 
-        return view('select-session', compact('family', 'sessions', 'children', 'attendance', 'adult'));
+        return view('session-select.index', compact('family', 'sessions', 'children', 'attendance', 'adult'));
     }
 
 }

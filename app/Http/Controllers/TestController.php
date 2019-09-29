@@ -100,7 +100,7 @@ class TestController extends Controller
   {
     $family = Family::findOrFail($id);
     $children = $family->children()->get();
-    return view('signup-edit', compact('family', 'children'));
+    return view('signup.edit', compact('family', 'children'));
   }
   /**
    * Update the specified resource in storage.

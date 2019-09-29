@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Chomp Sign-up</title>
-	<link rel="stylesheet" href="{{asset('css/app.css')}}">
-</head>
-<body>
+@extends('layout.layout', ['title' => 'Signup for Chomp'])
+
+@section('content')
 <form class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{action('SignupController@update', $family->id)}}" method="POST">
 	<h1 class="text-center py-3">Sign up</h1>
+	@method('PATCH')
 	@csrf
 	@if ($errors->any())
 		<div class="w-2/3 mx-auto mb-4 bg-yellow-light shadow-lg p-5">
@@ -53,28 +50,51 @@
 		<label class="block text-grey-darker text-sm font-bold mb-2" for="contact_number">Contact Phone Number</label>
 		<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" type="text"" value="{{ $family->contact_number }}" class="form-control" id="contact_number"  name="contact_number">
 	</div>
-	@foreach ($children as $child)
-	<div class="bg-grey-lighter shadow-md rounded px-8 pt-6 pb-8 mb-4">
-		<div class="mb-4">
-			<label class="block text-grey-darker text-sm font-bold mb-2" for="child[0][name]">Child name</label>
-			<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" type="text"" value="{{ $child->name }}" class="form-control" id="child[{{$loop->index}}][name]" name="child[{{$loop->index}}][name]">
-		</div>
-		<div class="mb-4">
-			<label class="block text-grey-darker text-sm font-bold mb-2" for="child[0][birth_year]">Year of birth</label>
-			<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" type="text"" value="{{ $child->birth_year }}" class="form-control" id="child[{{$loop->index}}][birth_year]" name="child[{{$loop->index}}][birth_year]">
-		</div>
-		<div class="mb-4">
-			<label class="block text-grey-darker text-sm font-bold mb-2" for="child[0][special_requirements]">Special food requirements</label>
-			<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline" type="text"" value="{{ $child->special_requirements }}" class="form-control" id="child[{{$loop->index}}][special_requirements]" name="child[{{$loop->index}}][special_requirements]">
-		</div>
+	@foreach ($adults as $adult)
+		<div id="divadult{{$loop->index}}" class="bg-grey-lighter shadow-md rounded px-8 pt-6 pb-8 mb-4">
+			<div class="mb-4">
+				<label class="text-gray-700" for="adult[{{$loop->index}}][name]">Adult name</label>
+			<input class="form-input mt-1 block w-full" type="text" value="{{$adult->name}}" class="form-control" id="adult[{{$loop->index}}][name]" name="adult[{{$loop->index}}][name]">
+				 </div>
+		<button type="button" class="text-red-400 btn_remove" id="adult{{$loop->index}}">Remove Adult</button>
+			 </div>
+		@endforeach
+	<div id="extraadult"></div>
+	<div class="mx-auto w-64 pb-4">
+		<button type="button" name="addadult" id="addadult" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+			<img class="pr-4" src="svg/person.svg">
+			Add Additional Adult
+		</button>
 	</div>
+	@foreach ($children as $child)
+		<div id="divchild{{$loop->index}}" class="bg-grey-lighter shadow-md rounded px-8 pt-6 pb-8 mb-4">
+			       <div class="mb-4">
+			        <label class="text-gray-700" for="child[{{$loop->index}}][name]">Child name</label>
+				     <input class="form-input mt-1 block w-full" type="text" value="{{ $child->name }}" class="form-control" id="child[{{$loop->index}}][name]" name="child[{{$loop->index}}][name]">
+				          </div>
+			          <div class="mb-4">
+				          <label class="text-gray-700" for="child[{{$loop->index}}][birthyear]">Year of birth</label>
+				      <input class="form-input mt-1 block w-full" type="text" value="{{ $child->birth_year }}" class="form-control" id="child[{{$loop->index}}][birthyear]" name="child[{{$loop->index}}][birthyear]">
+				          </div>
+			          <div class="mb-4">
+				          <label class="text-gray-700" for="child[{{$loop->index}}][special_requirements]">Additional Information (food, health, anything you think is important)</label>
+				      <textarea class="form-textarea mt-1 block w-full" rows="3" value="{{ $child->special_requirements }}" class="form-control" id="child[{{$loop->index}}][special_requirements]" name="child[{{$loop->index}}][special_requirements]"></textarea>
+			          </div>
+			  <button type="button" class="text-red-400 btn_remove" id="child{{$loop->index}}">Remove Child</button>
+			          </div>
 	@endforeach
+	<div id="children"></div>
+	<div class="mx-auto w-48 pb-4">
+		<button type="button" name="addchild" id="addchild" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+			<img class="pr-4" src="svg/person.svg">
+			Add Child
+		</button>
+	</div>
 
 
 <div class="mx-auto w-32">
-	<button type="submit" class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update</button>
+	<button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">Update</button>
 </div>
 </form>
 
-</body>
-</html>
+@endsection

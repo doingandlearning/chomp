@@ -85,7 +85,32 @@
     @endforeach
     </fieldset>
   </div>
-
+<script>
+  $.ajax({
+    url: "/register",
+    type: "POST",
+    dataType: "json", // type of response data
+    timeout: 1500, // timeout milliseconds
+    data: {
+      session_id: session_id,
+      person_id: person_id,
+      child: child,
+      adult: adult,
+      _token: {{ csrf_token() }}
+    },
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    success: function(data, status, xhr) {
+      // success callback function
+      checkbox.css("display", "unset");
+    },
+    error: function(jqXhr, textStatus, errorMessage) {
+      // error callback
+      alert("Error: " + errorMessage);
+    }
+  });
+</script>
 
 
 @endsection

@@ -18,7 +18,7 @@ class SignupController extends Controller
    */
   public function index()
   {
-    return view('signup');
+    return view('signup.index');
   }
 
   /**
@@ -57,7 +57,7 @@ class SignupController extends Controller
     $family = Family::create([
       'postcode' => request('postcode'),
       'contact_number' => request('contact_number'),
-      'gdpr' => request('consent'),
+      'consent' => request('consent'),
       'picture_authority' => $request->has('picture_authority') ? (bool)request('picture_authority') : false,
     ]);
 
@@ -117,7 +117,8 @@ class SignupController extends Controller
   {
     $family = Family::findOrFail($id);
     $children = $family->children()->get();
-    return view('signup-edit', compact('family', 'children'));
+    $adults = $family->additional_adults();
+    return view('signup.edit', compact('family', 'children', 'adults'));
   }
   /**
    * Update the specified resource in storage.
@@ -128,6 +129,65 @@ class SignupController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $rules = [
+        'consent' => 'required|accepted',
+        'contact_name' => 'required',
+        'contact_number' => 'required|numeric',
+        'postcode' => 'required',
+    ];
+
+    foreach($request->input('child') as $key => $value) {
+      $rules["child.{$key}.name"] = 'required';
+      $rules["child.{$key}.birthyear"] = 'required|numeric|min:1990';
+    }
+
+    $request->validate($rules);
+
+    $family = Family::findOrFail($id);
+
+    $family->postcode = request('postcode');
+    $family->contact_number = request('contact_number');
+    $family->consent =request('consent');
+    $family->picture_authority = $request->has('picture_authority') ? (bool)request('picture_authority') : false;
+    $family->save();
+
+    $primary = $family->primary_adult();
+    $primary->name = $request['contact_name'];
+    $primary->family()->associate($family);
+    $primary->save();
+
+    $additional_adults = $family->additional_adults();
+    foreach($additional_adults as $adult) {
+      $adult->delete();
+    }
+    foreach($request['adult'] as $key=>$adult) {
+      $adult = Adult::create([
+          'name' => $adult['name'],
+          'primary' => '0',
+      ]);
+
+      $adult->family()->associate($family);
+      $adult->save();
+    }
+    $children = $family->children()->get();
+    foreach ($children as $child) {
+      $child->delete();
+    }
+    foreach ($request['child'] as $child) {
+      if ($child['name'] !== null) {
+        $child = Child::create([
+            'name' => $child['name'],
+            'birth_year' => $child['birthyear'],
+            'special_requirements' => $child['special_requirements'] !== null ? $child['special_requirements'] : "None",
+        ]);
+
+        $child->family()->associate($family);
+        $child->save();
+      }
+    };
+
+    session(['family_id' => $family->id]);
+    return redirect('/select-session');
   }
 
   /**
