@@ -87,6 +87,9 @@ class SessionCrudController extends CrudController
             'entity' => 'season',
             'attribute' => 'name',
             'model' => 'App\Models\Season',
+            'attributes' => [
+                'required' => true,
+            ],
         ]);
 
         $this->crud->addField([
