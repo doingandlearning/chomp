@@ -12,11 +12,15 @@ class SessionTest extends TestCase
 {
     use DatabaseMigrations;
     /** @test */
-    public function cannot_create_a_session_without_season()
+    public function a_created_session_appears_on_the_sign_up_form()
     {
-        $session = Session::create([]);
+        $season = factory(App\Models\Season::class)->make();
+        $venue = factory(App\Models\Venue::class)->make();
+        $leader = factory(App\Models\Leader::class)->make();
+        $session = factory(App\Models\Session::class)->make(['season_id' => $season->id, 'venue_id' => $venue->id, 'leader']);
 
-        $this->assertTrue(True);
+        $response = $this->call('GET', '/select-session');
+        $this->assertEquals(200,$response->status());
 
     }
 }

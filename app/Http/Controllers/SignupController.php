@@ -69,14 +69,17 @@ class SignupController extends Controller
     $primary->family()->associate($family);
     $primary->save();
 
-    foreach($request['adult'] as $key=>$adult) {
-      $adult = Adult::create([
-        'name' => $adult['name'],
-        'primary' => '0',
-      ]);
+    if(isset($request['adult'])) {
+        foreach ($request['adult'] as $key => $adult) {
+            $adult = Adult::create([
+                'name' => $adult['name'],
+                'primary' => '0',
+            ]);
 
-      $adult->family()->associate($family);
-      $adult->save();
+
+            $adult->family()->associate($family);
+            $adult->save();
+        }
     }
 
     foreach ($request['child'] as $child) {
