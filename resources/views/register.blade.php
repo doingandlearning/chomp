@@ -61,7 +61,7 @@
                    session_id="{{ $id }}"
                    person_id="{{ $family['primary_adult']['id'] }}"
             {{ $family['primary_adult']['attending']  ?  "checked='checked'" : "" }}
-            ><label><span class="pb-4 font-weight-bolder text-lg underline">{{ $family['primary_adult']['name'] }} ({{$family['contact_number']}})</span></label>
+            ><label class="ml-2"><span class="pb-4 font-weight-bolder text-lg underline">{{ $family['primary_adult']['name'] }} ({{$family['contact_number']}})</span></label>
           </div>
           @if (!empty($family['additional']))
             @foreach ($family['additional'] as $additional)
@@ -70,18 +70,18 @@
                      session_id="{{ $id }}"
                  person_id="{{ $additional[0] }}"
                   {{ $additional[2]  ?  "checked='checked'" : "" }}
-              ><label>{{ $additional[1] }}</label>
+              ><label class="ml-2 mt-2">{{ $additional[1] }}</label>
             </div>
             @endforeach
           @endif
           <p>
             @foreach ($family['children'] as $child)
-            <div class="flex md:pr-8">
+            <div class="flex pr-8 bg-green-100 my-2 pb-2 pl-2">
               <input type="checkbox" class="child_click align-self"
                      session_id="{{ $id }}"
                  person_id="{{ $child['id'] }}"
                   {{ $child['attending']  ?  "checked='checked'" : "" }}
-              ><label>{{ $child['name'] }} ({{ $child['age'] }})</label>
+              ><label class="ml-2 mt-2">{{ $child['name'] }} ({{ $child['age'] }}) <br/>Special requirements: {{ $child['info'] }}</label>
             </div>
             @endforeach
           </p>
