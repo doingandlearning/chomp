@@ -38,7 +38,7 @@ class RegisterController extends Controller
                 ];
         };
 
-        $venue = $session->venue->first();
+        $venue = $session->venue;
         $date = $session->date;
         $leader = $session->leader()->first();
         return view('register', compact('id','date','venue', 'families', 'leader', 'session'));
