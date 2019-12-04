@@ -40,7 +40,7 @@ class RegisterController extends Controller
 
         $venue = $session->venue;
         $date = $session->date;
-        $leader = $session->leader()->first();
+        $leader = $session->leader;
         return view('register', compact('id','date','venue', 'families', 'leader', 'session'));
     }
 
