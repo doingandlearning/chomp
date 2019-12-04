@@ -86,6 +86,9 @@
             @endforeach
           </p>
         </div>
+        @if ($family['photo_consent'] === 0)
+        <div class="pt-6 bg-red-300">No photos please.</div>
+        @endif
         <div class="flex md:pr-8">
           <input type="checkbox"
                  class="family_click align-self hidden"
