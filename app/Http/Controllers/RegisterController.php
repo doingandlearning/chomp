@@ -29,6 +29,7 @@ class RegisterController extends Controller
                 'children' => $family->children_array_with_attendance($id),
                 'attending' => $family->attending_session($id),
                 'additional' => $family->additional_adults_array($id),
+                'photo_consent' => $family->picture_authority,
                 'primary_adult' => [
                   'id' => $primary->id,
                   'name' => $primary->name,
@@ -37,9 +38,9 @@ class RegisterController extends Controller
                 ];
         };
 
-        $venue = $session->venue->first();
+        $venue = $session->venue;
         $date = $session->date;
-        $leader = $session->leader()->first();
+        $leader = $session->leader;
         return view('register', compact('id','date','venue', 'families', 'leader', 'session'));
     }
 

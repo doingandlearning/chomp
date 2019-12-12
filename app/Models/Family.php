@@ -72,7 +72,8 @@ class Family extends Model
                 'id' => $child->id,
                 'attending' => $child->attending_session($id),
                 'name' =>$child->name,
-                'age' => $child->age()
+                'age' => $child->age(),
+                'info' => $child->special_requirements
             ];
         }
 

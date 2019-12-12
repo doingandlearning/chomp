@@ -105,7 +105,7 @@ $(document).ready(function() {
       '          <div class="mb-4">\n' +
       '          <label class="text-gray-700" for="child[' +
       i +
-      '][birthyear]">Year of birth</label>\n' +
+      '][birthyear]">Year of birth <span class="text-red-600">(we don\'t need a more accurate birthday, just the year)</span></label>\n' +
       '      <input class="form-input mt-1 block w-full" type="text" value="" class="form-control" id="child[' +
       i +
       '][birthyear]" name="child[' +

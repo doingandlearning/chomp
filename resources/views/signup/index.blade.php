@@ -4,37 +4,28 @@
 <form class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/signup" method="POST">
 	<h1 class="text-center text-3xl py-3">Sign up</h1>
 	@csrf
-	@if ($errors->any())
-		<div class="w-2/3 mx-auto mb-4 bg-yellow-light shadow-lg p-5">
-			Uh-oh a few mistakes!
-			<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
+
 	<div class="bg-grey-light rounded border shadow-sm py-3">
 		<div class="p-4">
-			<p class="text-center font-weight-bolder pb-3 text-capitalize">CONSENT – please read carefully</p>
-			<p class="pb-3">By completing this form you agree to the following…</p>
-			<ul>
-				<li class="pb-2">I agree to my child/ren taking part in the activities of Chomp.</li>
-				<li class="pb-2">I understand I am fully responsible for my child at all times whilst at Chomp.</li>
-				<li class="pb-2">I understand that whilst every caution is taken to keep exits closed, the building is in constant use and I am responsible for keeping my child within my sight.</li>
-				<li class="pb-2">I confirm to the best of my knowledge that my son/daughter does not suffer from any medical condition or food allergies other than those listed on this form.</li>
-				<li class="pb-2">I understand that the Church accepts no responsibility for loss, damage or injury caused by or during attendance on any of the clubs organised activities except where such loss, damage or injury can be shown to result directly from the negligence of the Church.</li>
-				<li class="pb-2">I understand that the personal information I have provided will be handled by Chomp in accordance with the Data Protection Act 1998, and it will be used for the purpose of providing services and collating statistics.  My information will be treated as confidential and will only be shared with other statutory organisations according to legal obligation.</li>
-				<li class="pb-2">We may take photographs for fundraising or promotional purposes that may be used online or for local and/or national press. If you do not want pictures of you or your child to be used, please indicate on the form below.</li>
-			</ul>
+			<p class="text-center font-weight-bolder pb-3 text-capitalize">Privacy Notice</p>
+			<p class="pb-3">By completing this form you agree to the following:</p>
+			<p class="pb-3">We are collecting this information to enable Chomp to keep in touch with you, to let you know what is happening, any activities that you might be interested in and to provide our funders with anonymous statistics.</p>
+			<p class="pb-3"> Your information will be held on our online database in accordance with our Data Protection Policy, our Privacy Statement, our Confidentiality Policy and our Data Retention Policy all of which can be found on our <a class="underline text-blue-700" href="http://www.onechurchbrighton.org/what-we-do/policies">web page</a>.</p>
+			<p class="pb-3">  If you would like to see a paper copy please call the office on 01273 694746.</p>
+			<p class="pb-3">If you are concerned about the way your information is being handled or you wish to notify us of a change to your information please contact Claire, our Data Protection Lead on 01273 694746 or email <a href="mailto:info@onechurchbrighton.org" class="underline text-blue-700">info@onechurchbrighton.org</a>.</p>
+			<p class="pb-3">We will make every effort to ensure that your concerns are addressed, however, you have the right to complain to the Information Commissioners Office.
+			</p>
 		</div>
 	</div>
 	<div class="block mx-auto pt-4 pl-3">
-		<div class="inline-flex items-center pb-3">
+		<div class="inline-flex items-center pb-3 border bg-green-100 p-3">
 			<input type="checkbox" value="true" class="form-checkbox text-green-800" id="consent"  name="consent">
-			<label class="ml-2" for="consent">I agree to the terms above.</label>
+			<label class="ml-2" for="consent">I understand that the personal information I have provided will be handled by One Church Brighton in accordance with the Privacy Notice above.</label>
+			@if ($errors->has('consent'))
+				<div class="text-red-600">{{ $errors->first('consent', ':message') }}</div>
+			@endif
 		</div>
-		<div class="mb-4 flex pb-3">
+		<div class="mb-4 flex pb-3 mt-4">
 			<input type="checkbox" value="true" class="form-checkbox text-green-800" id="picture_authority"  name="picture_authority">
 			<label class="ml-2" for="picture_authority">I give consent for images of me and my child to be used.</label>
 		</div>
