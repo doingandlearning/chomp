@@ -4,16 +4,7 @@
 <form class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/signup" method="POST">
 	<h1 class="text-center text-3xl py-3">Sign up</h1>
 	@csrf
-	@if ($errors->any())
-		<div class="w-2/3 mx-auto mb-4 bg-yellow-light shadow-lg p-5">
-			Uh-oh a few mistakes!
-			<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
+
 	<div class="bg-grey-light rounded border shadow-sm py-3">
 		<div class="p-4">
 			<p class="text-center font-weight-bolder pb-3 text-capitalize">Privacy Notice</p>
@@ -27,11 +18,14 @@
 		</div>
 	</div>
 	<div class="block mx-auto pt-4 pl-3">
-		<div class="inline-flex items-center pb-3">
+		<div class="inline-flex items-center pb-3 border bg-green-100 p-3">
 			<input type="checkbox" value="true" class="form-checkbox text-green-800" id="consent"  name="consent">
 			<label class="ml-2" for="consent">I understand that the personal information I have provided will be handled by One Church Brighton in accordance with the Privacy Notice above.</label>
+			@if ($errors->has('consent'))
+				<div class="text-red-600">{{ $errors->first('consent', ':message') }}</div>
+			@endif
 		</div>
-		<div class="mb-4 flex pb-3">
+		<div class="mb-4 flex pb-3 mt-4">
 			<input type="checkbox" value="true" class="form-checkbox text-green-800" id="picture_authority"  name="picture_authority">
 			<label class="ml-2" for="picture_authority">I give consent for images of me and my child to be used.</label>
 		</div>

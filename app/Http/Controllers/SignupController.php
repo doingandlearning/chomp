@@ -47,9 +47,11 @@ class SignupController extends Controller
       'postcode' => 'required',
     ];
 
-    foreach($request->input('child') as $key => $value) {
-      $rules["child.{$key}.name"] = 'required';
-      $rules["child.{$key}.birthyear"] = 'required|numeric|min:1990';
+    if(!empty($request->input('child'))) {
+        foreach ($request->input('child') as $key => $value) {
+            $rules["child.{$key}.name"] = 'required';
+            $rules["child.{$key}.birthyear"] = 'required|numeric|min:1990';
+        }
     }
 
     $request->validate($rules);
