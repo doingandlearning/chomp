@@ -25,7 +25,6 @@ class SelectSessionController extends Controller
           ->where('seasons.open', '=', 1)
           ->get()
           ->groupBy('name');
-
       return view('session-select.index', compact('family', 'sessions', 'children', 'adult', 'additional_adults'));
     }
 
@@ -77,7 +76,6 @@ class SelectSessionController extends Controller
         foreach ($sessions as $session) {
             $attendance[$session->id] = Session::find($session->id)->families()->where('id', $family->id)->exists();
         }
-
         $sessions = $sessions->groupBy('name');
 
         return view('session-select.index', compact('family', 'sessions', 'children', 'attendance', 'adult'));
