@@ -79,6 +79,16 @@ class Session extends Model
         return '<a class="btn btn-xs btn-default" href="http://google.com?q='.urlencode($this->text).'" data-toggle="tooltip" title="Just a demo custom button."><i class="fa fa-phone"></i> Text</a>';
     }
 
+    public function add_attending(int $number) {
+        $this->signed_up = $this->signed_up + $number;
+        $this->save();
+    }
+
+    public function remove_attending(int $number) {
+        $this->signed_up = $this->signed_up - $number;
+        $this->save();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

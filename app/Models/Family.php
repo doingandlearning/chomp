@@ -49,6 +49,10 @@ class Family extends Model
         return $this->adults()->count();
     }
 
+    function size_of() {
+        return $this->number_of_adults() + $this->number_of_children();
+    }
+
     function children_with_ages_array() {
         $children_db = $this->children()->get();
 

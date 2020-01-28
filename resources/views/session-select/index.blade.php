@@ -76,6 +76,9 @@
                     @isset($attendance)
                       {{ $attendance[$session->id] === false ? "" : "checked" }}
                         @endisset
+                        @if($session->signed_up + $family->size > $session->capacity)
+                          disabled
+                        @endif
                     >
                     <label for="{{$session->id}}" class="px-2 self-center">{{ date('l jS F', strtotime($session->date))}}</label>
                   </div>

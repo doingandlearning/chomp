@@ -13,15 +13,17 @@ class SelectSessionController extends Controller
 {
     public function index(Request $request){
       // Getting family details to check and confirm
-      $family_id = $request->session()->get('family_id');
+      // $family_id = $request->session()->get('family_id');
+      $family_id = 1;
       $family = Family::findOrFail($family_id);
       $children = $family->children;
       $adult = $family->primary_adult()->name;
       $additional_adults = $family->adults()->where('primary', '=', '0')->pluck('name');
+      $family['size'] = $family->size_of();
       $sessions = DB::table('sessions')
           ->join('venues', 'sessions.venue_id', '=', 'venues.id')
           ->join('seasons', 'seasons.id', '=', 'sessions.season_id')
-          ->select( 'sessions.date', 'venues.name', 'sessions.id')
+          ->select( 'sessions.date', 'venues.name', 'venues.capacity', 'sessions.id', 'sessions.signed_up')
           ->where('seasons.open', '=', 1)
           ->get()
           ->groupBy('name');
@@ -31,6 +33,7 @@ class SelectSessionController extends Controller
     public function store(Request $request) {
       $ids = $request->except(['_token', 'family']);
       $family = Family::findOrFail($request->family);
+      $family_size = $family->size_of();
       $current_sessions = $family->sessions()->pluck('id')->toArray();
 
       foreach ($ids as $id => $_) {
@@ -48,12 +51,14 @@ class SelectSessionController extends Controller
 
         if (!$family->sessions()->where('id', $id)->exists()) {
             $family->sessions()->attach($session);
+            Session::find($id)->add_attending($family_size);
         }
 
       }
 
       foreach ($current_sessions as $session) {
         $family->sessions()->detach($session);
+        Session::find($session)->remove_attending($family_size);
       }
       return view('thank-you', compact('sessions', 'family'));
     }
@@ -63,10 +68,11 @@ class SelectSessionController extends Controller
         $family = Family::findOrFail($id);
         $children = $family->children;
         $adult = $family->primary_adult()->name;
+        $family['size'] = $family->size_of();
         $sessions = DB::table('sessions')
             ->join('venues', 'sessions.venue_id', '=', 'venues.id')
             ->join('seasons', 'seasons.id', '=', 'sessions.season_id')
-                ->select( 'sessions.date', 'venues.name', 'sessions.id')
+                ->select( 'sessions.date', 'venues.name', 'venues.capacity','sessions.id', 'sessions.signed_up')
             ->where('seasons.open', '=', 1)
             ->get();
 
