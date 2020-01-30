@@ -13,8 +13,7 @@ class SelectSessionController extends Controller
 {
     public function index(Request $request){
       // Getting family details to check and confirm
-      // $family_id = $request->session()->get('family_id');
-      $family_id = 1;
+      $family_id = $request->session()->get('family_id');
       $family = Family::findOrFail($family_id);
       $children = $family->children;
       $adult = $family->primary_adult()->name;
