@@ -76,7 +76,6 @@
 	</div>
 	@if($errors)
 	@foreach ($errors->all() as $error)
-	<div class="bg-red-200 px-2">{{$error}}</div>
 		 @if (strpos($error, 'child.') !== false)
 		 	<div class="bg-red-200 px-2">Sorry, all children need a name and a birth year.</div>
 		 @endif
