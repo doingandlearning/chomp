@@ -34,14 +34,23 @@
 	<div class="mb-4 block">
 		<label class="text-gray-700">Name</label>
 		<input class="form-input mt-1 block w-full" type="text" value="{{ old('contact_name') }}" class="form-control" id="contact_name"  name="contact_name">
+		@if ($errors->has('contact_name'))
+		<div class="text-red-600">{{ $errors->first('contact_name', ':message') }}</div>
+	@endif
 	</div>
 	<div class="mb-4 block">
 		<label class="text-gray-700" for="postcode">Post Code</label>
 		<input class="form-input mt-1 block w-full" type="text" value="{{ old('postcode') }}" class="form-control" id="postcode"  name="postcode">
+		@if ($errors->has('postcode'))
+			<div class="text-red-600">{{ $errors->first('postcode', ':message') }}</div>
+		@endif
 	</div>
 	<div class="mb-4 block">
 		<label class="text-gray-700" for="contact_number">Contact Phone Number</label>
 		<input class="form-input mt-1 block w-full" type="text" value="{{ old('contact_number') }}" class="form-control" id="contact_number"  name="contact_number">
+		@if ($errors->has('contact_number'))
+		<div class="text-red-600">{{ $errors->first('contact_number', ':message') }}</div>
+	@endif
 	</div>
 	<div class="mx-auto w-64 pb-4">
 		<button type="button" name="addadult" id="addadult" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
@@ -56,6 +65,7 @@
 			<img class="pr-4" src="svg/person.svg">
 			Add Child
 		</button>
+
 	</div>
 
 
@@ -64,6 +74,18 @@
 	<div class="mx-auto w-32">
 		<button type="submit" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">Sign up</button>
 	</div>
+	@if($errors)
+	@foreach ($errors->all() as $error)
+	<div class="bg-red-200 px-2">{{$error}}</div>
+		 @if (strpos($error, 'child.') !== false)
+		 	<div class="bg-red-200 px-2">Sorry, all children need a name and a birth year.</div>
+		 @endif
+
+		 @if (strpos($error, 'child field') !== false)
+		 <div class="bg-red-200 px-2">Sorry, you need to add some children.</div>
+	 @endif
+ @endforeach
+@endif
 </form>
 
 

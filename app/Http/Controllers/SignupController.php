@@ -28,8 +28,6 @@ class SignupController extends Controller
    */
   public function create()
   {
-
-
   }
 
   /**
@@ -45,13 +43,14 @@ class SignupController extends Controller
       'contact_name' => 'required',
       'contact_number' => 'required|numeric',
       'postcode' => 'required',
+      'child' => 'required'
     ];
 
-    if(!empty($request->input('child'))) {
-        foreach ($request->input('child') as $key => $value) {
-            $rules["child.{$key}.name"] = 'required';
-            $rules["child.{$key}.birthyear"] = 'required|numeric|min:1990';
-        }
+    if (!empty($request->input('child'))) {
+      foreach ($request->input('child') as $key => $value) {
+        $rules["child.{$key}.name"] = 'required';
+        $rules["child.{$key}.birthyear"] = 'required|numeric|min:1990';
+      }
     }
 
     $request->validate($rules);
@@ -60,7 +59,7 @@ class SignupController extends Controller
       'postcode' => request('postcode'),
       'contact_number' => request('contact_number'),
       'consent' => request('consent'),
-      'picture_authority' => $request->has('picture_authority') ? (bool)request('picture_authority') : false,
+      'picture_authority' => $request->has('picture_authority') ? (bool) request('picture_authority') : false,
     ]);
 
     $primary = Adult::create([
@@ -71,17 +70,17 @@ class SignupController extends Controller
     $primary->family()->associate($family);
     $primary->save();
 
-    if(isset($request['adult'])) {
-        foreach ($request['adult'] as $key => $adult) {
-            $adult = Adult::create([
-                'name' => $adult['name'],
-                'primary' => '0',
-            ]);
+    if (isset($request['adult'])) {
+      foreach ($request['adult'] as $key => $adult) {
+        $adult = Adult::create([
+          'name' => $adult['name'],
+          'primary' => '0',
+        ]);
 
 
-            $adult->family()->associate($family);
-            $adult->save();
-        }
+        $adult->family()->associate($family);
+        $adult->save();
+      }
     }
 
     foreach ($request['child'] as $child) {
@@ -135,13 +134,13 @@ class SignupController extends Controller
   public function update(Request $request, $id)
   {
     $rules = [
-        'consent' => 'required|accepted',
-        'contact_name' => 'required',
-        'contact_number' => 'required|numeric',
-        'postcode' => 'required',
+      'consent' => 'required|accepted',
+      'contact_name' => 'required',
+      'contact_number' => 'required|numeric',
+      'postcode' => 'required',
     ];
 
-    foreach($request->input('child') as $key => $value) {
+    foreach ($request->input('child') as $key => $value) {
       $rules["child.{$key}.name"] = 'required';
       $rules["child.{$key}.birthyear"] = 'required|numeric|min:1990';
     }
@@ -152,8 +151,8 @@ class SignupController extends Controller
 
     $family->postcode = request('postcode');
     $family->contact_number = request('contact_number');
-    $family->consent =request('consent');
-    $family->picture_authority = $request->has('picture_authority') ? (bool)request('picture_authority') : false;
+    $family->consent = request('consent');
+    $family->picture_authority = $request->has('picture_authority') ? (bool) request('picture_authority') : false;
     $family->save();
 
     $primary = $family->primary_adult();
@@ -162,13 +161,13 @@ class SignupController extends Controller
     $primary->save();
 
     $additional_adults = $family->additional_adults();
-    foreach($additional_adults as $adult) {
+    foreach ($additional_adults as $adult) {
       $adult->delete();
     }
-    foreach($request['adult'] as $key=>$adult) {
+    foreach ($request['adult'] as $key => $adult) {
       $adult = Adult::create([
-          'name' => $adult['name'],
-          'primary' => '0',
+        'name' => $adult['name'],
+        'primary' => '0',
       ]);
 
       $adult->family()->associate($family);
@@ -181,9 +180,9 @@ class SignupController extends Controller
     foreach ($request['child'] as $child) {
       if ($child['name'] !== null) {
         $child = Child::create([
-            'name' => $child['name'],
-            'birth_year' => $child['birthyear'],
-            'special_requirements' => $child['special_requirements'] !== null ? $child['special_requirements'] : "None",
+          'name' => $child['name'],
+          'birth_year' => $child['birthyear'],
+          'special_requirements' => $child['special_requirements'] !== null ? $child['special_requirements'] : "None",
         ]);
 
         $child->family()->associate($family);
@@ -206,7 +205,8 @@ class SignupController extends Controller
     //
   }
 
-  public function messages() {
+  public function messages()
+  {
     return [
       'child.*.birth_year' => "To help with planning, we need a birth year for each child"
     ];
